@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	sl "slices"
 	"strconv"
 	st "strings"
@@ -77,16 +79,20 @@ func main() {
 	roman_digits := []string{"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"}
 	roman_tens := []string{"X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "C"}
 	operations := []string{"+", "-", "*", "/"}
-	var msg string
-	fmt.Scan(&msg)
-	msg = st.TrimSpace(msg)
-	arr := st.Split(msg, " ")
-	//Проверяем корректность ввода
-	if check_input(arr, arabic_digits, roman_digits, operations) == "арабские" {
-		//работа с арабскими
-		fmt.Println(arabic_calculations(arr))
-	} else {
-		//работа с римскими
-		fmt.Println(roman_calculations(arr, arabic_digits, roman_digits, roman_tens))
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		msg, _ := reader.ReadString('\n')
+		msg = st.TrimSpace(msg)
+		arr := st.Split(msg, " ")
+		//Проверяем корректность ввода
+		if check_input(arr, arabic_digits, roman_digits, operations) == "арабские" {
+			//работа с арабскими
+			fmt.Println(arabic_calculations(arr))
+		} else {
+			//работа с римскими
+			fmt.Println(roman_calculations(arr, arabic_digits, roman_digits, roman_tens))
+		}
+		break
 	}
+
 }
